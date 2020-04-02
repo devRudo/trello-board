@@ -1,11 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trello API Project</title>
+    <%- include('./partials/head') -%>
 </head>
 <body>
-    <p>Initializing the project</p>
+    <header>
+        <%- include('./partials/header') -%>
+    </header>
+    <main>
+        <div class="container-fluid">
+            <div class="row p-4">
+                <h3 class="col-md-12 page-title">Personal Boards</h3>
+            </div>
+            <div class="row p-4">
+                <a href="/board/1" class="col-md-2">
+                    <div class="card shadow text-dark mb-3 board">
+                        <div class="card-body d-flex justify-content-center align-items-center">
+                            <h6>Board Name</h6>
+                        </div>
+                    </div>
+                </a>
+                <a href="/board/2" class="col-md-2">
+                    <div class="card shadow text-dark mb-3 board">
+                        <div class="card-body d-flex justify-content-center align-items-center">
+                            <h6>Board Name</h6>
+                        </div>
+                    </div>
+                </a><a href="/board/3" class="col-md-2">
+                    <div class="card shadow text-dark mb-3 board">
+                        <div class="card-body d-flex justify-content-center align-items-center">
+                            <h6>Board Name</h6>
+                        </div>
+                    </div>
+                </a><a href="/board/4" class="col-md-2">
+                    <div class="card shadow text-dark mb-3 board">
+                        <div class="card-body d-flex justify-content-center align-items-center">
+                            <h6>Board Name</h6>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+    <%- include('./partials/footer') -%>
 </body>
 </html>
