@@ -9,6 +9,14 @@
   box-sizing: inherit;
 }
 
+.navbar-toggler {
+  border: none;
+}
+
+button:focus {
+  outline: none;
+}
+
 body {
   font-family: "Gotu", sans-serif;
   width: 100%;
@@ -31,4 +39,24 @@ body {
 .board:hover {
   transform: scale(1.05);
   transition: 0.5s;
+}
+
+#addlist{
+  background-color: rgba(255, 255 , 255, 0.1);
+  cursor: pointer;
+  color: gray;
+}
+
+#addlist:hover{
+  background-color: rgba(255, 255 , 255, 0.2);
+  color: darkslategray;
+}
+
+.addcard{
+  cursor: pointer;
+  color: gray;
+}
+
+.addcard:hover {
+  color: darkslategray;
 }

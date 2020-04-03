@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require('body-parser');
 const path = require("path");
 const cwd = process.cwd();
 const config = require(path.join(cwd, "/config/config"));
@@ -19,6 +20,9 @@ if (config.NODE_ENV !== "production") {
 // Creating new express server instance
 const app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // Serving static files
 app.use(express.static(path.join(cwd, "/public")));
 
@@ -37,7 +41,31 @@ app.get('/', (request, response) => {
 app.get('/board/:id', (request, response) => {
   fetch(`https://api.trello.com/1/boards/${request.params.id}?lists=all&cards=all&key=${trello_api_key}&token=${trello_token}`)
     .then(response => response.json())
-    .then(board => response.render('pages/board', { board }))
+    .then(board => response.render('pages/board', { board, boards: [] }))
+    .catch(err => console.log(err));
+});
+
+app.post('/cards', (request, response) => {
+  fetch(`https://api.trello.com/1/cards?idList=${request.body.list_id}&name=${request.body.name}&key=${trello_api_key}&token=${trello_token}`, {
+    method: 'POST'
+  })
+    .then(response => {
+      console.log(`Response : ${response.status} ${response.statusText}`);
+      return response.text();
+    })
+    .then(text => response.redirect(request.get('Referer')))
+    .catch(err => console.log(err));
+});
+
+app.post('/lists', (request, response) => {
+  fetch(`https://api.trello.com/1/lists?idBoard=${request.body.board_id}&name=${request.body.name}&pos=bottom&key=${trello_api_key}&token=${trello_token}`, {
+    method: 'POST'
+  })
+    .then(response => {
+      console.log(`Response : ${response.status} ${response.statusText}`);
+      return response.text();
+    })
+    .then(text => response.redirect(request.get('Referer')))
     .catch(err => console.log(err));
 });
 

@@ -20,14 +20,17 @@
                                 <div class="card shadow text-dark mb-3">
                                     <div class="card-header p-2 rounded-lg">
                                         <p class="mb-3 mt-2"><%= list.name %></p>
-                                        <ul class="list-group">
+                                        <ul class="list-group" id="listcard">
                                             <% board.cards.forEach((card)=>{ %>
                                                 <% if(card.idList === list.id){ %>
                                                     <li class="list-group-item p-1 rounded-lg mb-3 shadow-sm"><%= card.name %></li>
                                                 <% } %>
                                             <% }); %>
+                                            <form action="/cards" method="post" class="list-group">
+                                                <input type="hidden" name="list_id" value="<%= list.id %>">
+                                            </form>
                                         </ul>
-                                        <p class="mb-2 mt-3 pl-2"> <b class="">+</b> Add another card</p>
+                                        <p class="mb-2 mt-3 pl-2 addcard"> <b class="">+</b> Add another card</p>
                                     </div>
                                 </div>
                             </li>
@@ -37,9 +40,14 @@
                 <div class="col-md-2">
                     <ul class="list-group">
                         <li>
-                            <div class="card shadow text-dark mb-3">
+                            <div class="card shadow mb-3">
                                 <div class="card-header p-2 rounded-lg">
-                                    <p class="mb-2 mt-3 pl-2"> <b class="">+</b> Add another list</p>
+                                    <ul>
+                                        <form action="/lists" method="post" class="list-group">
+                                            <input type="hidden" name="board_id" value="<%= board.id %>">
+                                        </form>
+                                    </ul>
+                                    <p class="mb-2 mt-3 pl-2" id="addlist"> <b class="">+</b> Add another list</p>
                                 </div>
                             </div>
                         </li>
