@@ -35,7 +35,10 @@ app.get('/', (request, response) => {
 });
 
 app.get('/board/:id', (request, response) => {
-  response.render('pages/board');
+  fetch(`https://api.trello.com/1/boards/${request.params.id}?lists=all&cards=all&key=${trello_api_key}&token=${trello_token}`)
+    .then(response => response.json())
+    .then(board => response.render('pages/board', { board }))
+    .catch(err => console.log(err));
 });
 
 // listening to server on defined port
