@@ -13,32 +13,15 @@
                 <h3 class="col-md-12 page-title">Personal Boards</h3>
             </div>
             <div class="row p-4">
-                <a href="/board/1" class="col-md-2">
-                    <div class="card shadow text-dark mb-3 board">
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <h6>Board Name</h6>
+                <% boards.forEach((board)=> { %>
+                    <a href="/board/<%= board.id %>" class="col-md-2">
+                        <div class="card shadow text-dark mb-3 board">
+                            <div class="card-body d-flex justify-content-center align-items-center">
+                                <h6><%= board.name %></h6>
+                            </div>
                         </div>
-                    </div>
-                </a>
-                <a href="/board/2" class="col-md-2">
-                    <div class="card shadow text-dark mb-3 board">
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <h6>Board Name</h6>
-                        </div>
-                    </div>
-                </a><a href="/board/3" class="col-md-2">
-                    <div class="card shadow text-dark mb-3 board">
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <h6>Board Name</h6>
-                        </div>
-                    </div>
-                </a><a href="/board/4" class="col-md-2">
-                    <div class="card shadow text-dark mb-3 board">
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <h6>Board Name</h6>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                <% }); %>
             </div>
         </div>
     </main>

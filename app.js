@@ -28,7 +28,10 @@ app.set("view engine", "ejs");
 
 // defining routes
 app.get('/', (request, response) => {
-  response.render("index");
+  fetch(`https://api.trello.com/1/members/me/boards/?key=${trello_api_key}&token=${trello_token}`)
+    .then(response => response.json())
+    .then(boards => response.render('index', { boards }))
+    .catch(err => console.log(err));
 });
 
 app.get('/board/:id', (request, response) => {

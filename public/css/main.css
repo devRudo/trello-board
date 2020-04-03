@@ -16,9 +16,6 @@ body {
   /* background-image: linear-gradient(to bottom, #235352, #545343); */
 }
 
-.page-title {
-}
-
 .page-title::after {
   content: " >";
 }
