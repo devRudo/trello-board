@@ -12,19 +12,44 @@
             <div class="row p-4">
                 <h3 class="col-md-12 page-title">Personal Boards</h3>
             </div>
+            <div class="row p-4 d-none" id="status">
+                <div class="col-md-12 alert"></div>
+            </div>
             <div class="row p-4">
                 <% boards.forEach((board)=> { %>
                     <a href="/board/<%= board.id %>" class="col-md-2">
                         <div class="card shadow text-dark mb-3 board">
                             <div class="card-body d-flex justify-content-center align-items-center">
+                                <i class="fas fa-ellipsis-v position-absolute deleteBoard"></i>
+                                <div class="position-absolute shadow-sm btn-primary d-none deleteBoardDiv rounded-lg" boardId="<%= board.id %>">
+                                    <h6>delete this board</h6>
+                                </div>
                                 <h6><%= board.name %></h6>
                             </div>
                         </div>
                     </a>
                 <% }); %>
+                <a class="col-md-2" id="addboard">
+                    <div class="card-header p-0 shadow text-dark mb-3 board">
+                        <div class="card-body d-flex justify-content-center align-items-center">
+                            <h6 class="text-muted btn-lg"> Create new board</h6>
+                        </div>
+                    </div>
+                </a>
+                <a class="col-md-2 d-none" id="addboardform">
+                    <div class="card shadow-sm text-dark mb-3 board">
+                        <div class="card-body">
+                            <form action="/addboard" method="post">
+                                <input type="text" name="board_name" class="form-control" placeholder="Add borad title..." autofocus>
+                                <button type="submit" class="btn btn-success mt-3">Create Board</button>
+                            </form>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </main>
     <%- include('./partials/footer') -%>
+    <script src="/js/main.js"></script>
 </body>
 </html>

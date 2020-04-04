@@ -10,20 +10,22 @@
     <main>
         <div class="container-fluid">
             <div class="row p-4">
-                <h3 class="col-md-12 page-title"><%= board.name %></h3>
+                <div class="col-md-12">
+                    <h3 class="d-inline page-title" id="boardName" contenteditable="true"><%= board.name %></h3>
+                </div>
             </div>
             <div class="row p-4">
                 <% board.lists.forEach((list)=>{ %>
                     <div class="col-md-2">
                         <ul class="list-group">
                             <li>
-                                <div class="card shadow text-dark mb-3">
+                                <div class="card shadow text-dark mb-3 rounded-lg">
                                     <div class="card-header p-2 rounded-lg">
-                                        <p class="mb-3 mt-2"><%= list.name %></p>
+                                        <p class="mb-2 mt-2 p-1 pl-3 listName" listId="<%= list.id %>" contenteditable="true"><%= list.name %><a class="btn btn-sm position-absolute d-none deleteList"><i class="fas fa-trash-alt text-danger"></i></a></p>
                                         <ul class="list-group" id="listcard">
                                             <% board.cards.forEach((card)=>{ %>
                                                 <% if(card.idList === list.id){ %>
-                                                    <li class="list-group-item p-1 rounded-lg mb-3 shadow-sm"><%= card.name %></li>
+                                                    <li class="list-group-item p-1 pl-2 rounded-lg mb-3 shadow-sm cardName" cardId ="<%= card.id %>" contenteditable="true"><%= card.name %><a class="btn btn-sm position-absolute d-none deleteCard"><i class="fas fa-trash-alt text-danger"></i></a></li>
                                                 <% } %>
                                             <% }); %>
                                             <form action="/cards" method="post" class="list-group">
@@ -40,11 +42,12 @@
                 <div class="col-md-2">
                     <ul class="list-group">
                         <li>
-                            <div class="card shadow mb-3">
+                            <div class="card shadow mb-3 rounded-lg">
                                 <div class="card-header p-2 rounded-lg">
                                     <ul>
                                         <form action="/lists" method="post" class="list-group">
                                             <input type="hidden" name="board_id" value="<%= board.id %>">
+                                            <p id="output"></p>
                                         </form>
                                     </ul>
                                     <p class="mb-2 mt-3 pl-2" id="addlist"> <b class="">+</b> Add another list</p>
@@ -57,5 +60,6 @@
         </div>
     </main>
     <%- include('../partials/footer') -%>
+    <script src="/js/board.js"></script>
 </body>
 </html>

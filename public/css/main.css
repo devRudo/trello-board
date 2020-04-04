@@ -9,6 +9,14 @@
   box-sizing: inherit;
 }
 
+body {
+  font-family: "Gotu", sans-serif;
+  width: 100%;
+  height: 100vh;
+  /* background: url('/images/body-bg.jpg') center center no-repeat; */
+  /* background-size: cover; */
+}
+
 .navbar-toggler {
   border: none;
 }
@@ -17,12 +25,6 @@ button:focus {
   outline: none;
 }
 
-body {
-  font-family: "Gotu", sans-serif;
-  width: 100%;
-  height: 100vh;
-  /* background-image: linear-gradient(to bottom, #235352, #545343); */
-}
 
 .page-title::after {
   content: " >";
@@ -37,7 +39,7 @@ body {
 }
 
 .board:hover {
-  transform: scale(1.05);
+  transform: scale(1.08);
   transition: 0.5s;
 }
 
@@ -59,4 +61,47 @@ body {
 
 .addcard:hover {
   color: darkslategray;
+}
+
+#addboard {
+  cursor: pointer;
+}
+
+#addboard .board:hover{
+  transform: none;
+  background-color: #dddddd;
+}
+
+#addboardform .board{
+  background-color: #f8f8f8;
+}
+
+#addboardform .board:hover{
+  transform: none;
+}
+
+.deleteCard {
+  cursor: pointer;
+  top: 0;
+  right: 0;
+}
+
+.deleteList {
+  cursor: pointer;
+  top: 15px;
+  right: 0;
+}
+
+.deleteBoard{
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  padding: 20px;
+}
+
+.deleteBoardDiv{
+  cursor: pointer;
+  top: 40px;
+  right: 30px;
+  padding: 10px 20px;
 }
