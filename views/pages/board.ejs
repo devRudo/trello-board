@@ -78,7 +78,18 @@
                                                                             <% board.checklists.forEach((checklist)=>{ %>
                                                                                 <% if(checklist.idCard === card.id){ %>
                                                                                     <div class="checklist mb-2">
-                                                                                        <h6 class="mb-2"><i class="far fa-check-square mr-2"></i> <%= checklist.name %></h6>
+                                                                                        <div class="d-flex justify-content-between align-items-center">
+                                                                                            <h6 class="mb-2 d-flex justify-content-start"><i class="far fa-check-square mr-2"></i> <span type="button" data-toggle="modal" data-target="#checkListFormModal"><%= checklist.name %> </span>
+                                                                                            </h6>
+                                                                                            <button class="bg-dark p-1 pl-2 pr-2 btn text-white rounded-lg mr-4 deleteChecklist" checkListId="<%= checklist.id %>">Delete</button>
+                                                                                        </div>
+                                                                                        <form action="/updateChecklistName" method="post" class="modal position-relative p-4" id="checkListFormModal" role="dialog">
+                                                                                            <div class="d-flex justify-content-between">
+                                                                                                <input type="text" name="checkListName" class="form-control" value="<%= checklist.name %>">
+                                                                                                <input type="hidden" name="checkListId" value="<%= checklist.id %>">
+                                                                                            </div>
+                                                                                            <button type="submit" class="form-control-sm btn btn-success mt-2">Save</button>
+                                                                                        </form>
                                                                                         <ul class="pt-2 pb-2">
                                                                                             <% checklist.checkItems.forEach((checkItem)=>{ %>
                                                                                                 <li class="d-flex align-items-center"><input type="checkbox" class="form-control-sm mr-4" <% if(checkItem.state === 'complete'){ %><%= 'checked' %> <% } %>> <span class="checklistName"><%= checkItem.name %></span></li>

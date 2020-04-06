@@ -166,5 +166,25 @@ $(document).ready(() => {
                 });
         });
     });
-    
+
+    $('.deleteChecklist').each((i, deleteCheckList) => {
+        $(deleteCheckList).click(() => {
+            let obj = {};
+            obj.checkListId = $(deleteCheckList).attr('checkListId');
+            fetch('/deleteCheckList', {
+                method: 'post',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(obj)
+            })
+                .then(() => location.reload())
+                .catch((err) => {
+                    console.log(err);
+                });
+        });
+    });
+
+
+
 });
