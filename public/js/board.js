@@ -79,15 +79,21 @@ $(document).ready(() => {
                     });
             }
         });
-        $(listName).mouseenter((event) => {
-            $(event.target).children().removeClass('d-none');
-        });
-        $(listName).mouseleave((event) => {
-            $(event.target).children().addClass('d-none');
-        });
     });
 
     // Update card content
+    $('.cardDiv').each((i, card) => {
+        $(card).hover(() => {
+            $(card).children().children().next().toggleClass('d-none');
+        });
+        $(card).click((event) => {
+            if ($(card).children().children().attr('contenteditable') !== 'true') {
+                let cardId = $(card).children().attr('cardId');
+                $('#' + cardId).modal('toggle');
+            }
+        });
+    });
+
     $('.cardName').each((i, cardName) => {
         $(cardName).keypress((e) => {
             if (e.keyCode === 13) {
@@ -108,19 +114,13 @@ $(document).ready(() => {
                     });
             }
         });
-        $(cardName).mouseenter((event) => {
-            $(event.target).children().removeClass('d-none');
-        });
-        $(cardName).mouseleave((event) => {
-            $(event.target).children().addClass('d-none');
-        });
     });
 
     // delete card
     $('.deleteCard').each((i, card) => {
         $(card).click(() => {
             let obj = {};
-            obj.cardId = $(card).parent().attr('cardId');
+            obj.cardId = $(card).attr('cardId');
             fetch('/deleteCard', {
                 method: 'post',
                 headers: {
@@ -135,10 +135,24 @@ $(document).ready(() => {
         });
     });
 
+    $('.listOption').each((i, option) => {
+        $(option).click(() => {
+            $(option).next().toggleClass('d-none');
+        });
+    });
+
+    $('.editCard').each((i, edit) => {
+        $(edit).click((event) => {
+            event.stopPropagation();
+            $(edit).prev().attr('contenteditable', 'true').focus();
+            $(edit).parent().parent().next().toggleClass('d-none');
+        });
+    });
+
     $('.deleteList').each((i, list) => {
         $(list).click(() => {
             let obj = {};
-            obj.listId = $(list).parent().attr('listId');
+            obj.listId = $(list).attr('listId');
             fetch('/deleteList', {
                 method: 'post',
                 headers: {
@@ -152,5 +166,5 @@ $(document).ready(() => {
                 });
         });
     });
-
+    
 });

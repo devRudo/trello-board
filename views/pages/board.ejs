@@ -21,11 +21,96 @@
                             <li>
                                 <div class="card shadow text-dark mb-3 rounded-lg">
                                     <div class="card-header p-2 rounded-lg">
-                                        <p class="mb-2 mt-2 p-1 pl-3 listName" listId="<%= list.id %>" contenteditable="true"><%= list.name %><a class="btn btn-sm position-absolute d-none deleteList"><i class="fas fa-trash-alt text-danger"></i></a></p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="mb-2 mt-2 p-1 pl-2 listName" listId="<%= list.id %>" contenteditable="true"><%= list.name %></p>
+                                            <a class="btn btn-sm position-absolute listOption"><i class="fas fa-ellipsis-h text-dark"></i></a>
+                                            <div class="position-absolute shadow d-none bg-white text-dark deleteList rounded-lg" listId="<%= list.id %>">
+                                                <h6>delete this list</h6>
+                                            </div>
+                                        </div>
                                         <ul class="list-group" id="listcard">
                                             <% board.cards.forEach((card)=>{ %>
                                                 <% if(card.idList === list.id){ %>
-                                                    <li class="list-group-item p-1 pl-2 rounded-lg mb-3 shadow-sm cardName" cardId ="<%= card.id %>" contenteditable="true"><%= card.name %><a class="btn btn-sm position-absolute d-none deleteCard"><i class="fas fa-trash-alt text-danger"></i></a></li>
+                                                    <li class="list-group-item p-1 pl-2 rounded-lg mb-3 shadow-sm cardDiv">
+                                                        <div class="cardName p-0" cardId ="<%= card.id %>">
+                                                            <p onfocus="document.execCommand('selectAll',false,null)"><%= card.name %></p>
+                                                            <a class="btn btn-sm position-absolute d-none editCard"><i class="fas fa-pencil-alt text-dark"></i></a>
+                                                        </div>
+                                                        <% if(card.desc !== "") { %>
+                                                            <i class="fas fa-align-left text-muted"></i>
+                                                        <% } %>
+                                                    </li>
+                                                    <div class="position-absolute cardOptions d-none hiddenOnClick">
+                                                        <ul class="list-group p-2">
+                                                            <li class="list-group-item m-2 p-1 deleteCard" cardId ="<%= card.id %>">Delete card</li>
+                                                            <li class="list-group-item m-2 p-1">Move card</li>
+                                                            <li class="list-group-item m-2 p-1">Copy card</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="modal" id="<%= card.id %>" tabindex="-1" role="dialog" aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                                            <div class="modal-content bg-light">
+                                                                <div class="modal-header border-0">
+                                                                    <h5 class="font-weight-bold"><%= card.name %></h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-9 mr-0 pr-0">
+                                                                            <p class="text-muted">in list <a><%= list.name %></a></p><br>
+                                                                            <div class="cardDescription mb-2">
+                                                                                <h6><i class="fas fa-align-left text-muted mr-2"></i> Description</h6>
+                                                                                <% if(card.desc===""){ %>
+                                                                                    <form action="/addCardDescription" method="POST" class="p-4">
+                                                                                        <textarea class="form-control description-text" name="desc" placeholder="Add a more detailed description..."></textarea>
+                                                                                    </form>
+                                                                                <% } else{ %>
+                                                                                    <div class="p-4">
+                                                                                        <textarea class="form-control description-text disable bg-light" name="desc" placeholder="Add a more detailed description..." readonly><%= card.desc %></textarea>
+                                                                                    </div>
+                                                                                <% } %>
+                                                                            </div>
+                                                                            <% board.checklists.forEach((checklist)=>{ %>
+                                                                                <% if(checklist.idCard === card.id){ %>
+                                                                                    <div class="checklist mb-2">
+                                                                                        <h6 class="mb-2"><i class="far fa-check-square mr-2"></i> <%= checklist.name %></h6>
+                                                                                        <ul class="pt-2 pb-2">
+                                                                                            <% checklist.checkItems.forEach((checkItem)=>{ %>
+                                                                                                <li class="d-flex align-items-center"><input type="checkbox" class="form-control-sm mr-4" <% if(checkItem.state === 'complete'){ %><%= 'checked' %> <% } %>> <span class="checklistName"><%= checkItem.name %></span></li>
+                                                                                            <% }); %>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                <% } %>
+                                                                            <% }); %>
+                                                                            <div class="cardActivities mb-2">
+                                                                                <h6><i class="fas fa-dumbbell text-muted mr-2"></i> Activity</h6>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-3">
+                                                                            <ul class="">
+                                                                                <small class="font-weight-bold text-muted text-uppercase">Add to card</small>
+                                                                                <li class="p-1 pl-2 mt-2 modaloptions rounded-lg"><i class="far fa-user"></i> Members</li>
+                                                                                <li class="p-1 pl-2 mt-2 modaloptions rounded-lg"><i class="fas fa-tag"></i> Labels</li>
+                                                                                <li class="p-1 pl-2 mt-2 modaloptions rounded-lg"><i class="fas fa-tasks"></i> Checklist</li>
+                                                                                <li class="p-1 pl-2 mt-2 modaloptions rounded-lg"><i class="far fa-clock"></i> Due Date</li>
+                                                                                <li class="p-1 pl-2 mt-2 modaloptions rounded-lg"><i class="fas fa-paperclip"></i> Attachment</li>
+                                                                            </ul>
+                                                                            <ul class="mt-4">
+                                                                                <small class="font-weight-bold text-muted text-uppercase">Actions</small>
+                                                                                <li class="p-1 pl-2 mt-2 modaloptions rounded-lg"><i class="fas fa-arrow-right"></i> Move</li>
+                                                                                <li class="p-1 pl-2 mt-2 modaloptions rounded-lg"><i class="far fa-copy"></i> Copy</li>
+                                                                                <li class="p-1 pl-2 mt-2 modaloptions rounded-lg"><i class="fas fa-archive"></i> Archive</li>
+                                                                                <li class="p-1 pl-2 mt-2 modaloptions rounded-lg"><i class="far fa-share-square"></i> Share</li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 <% } %>
                                             <% }); %>
                                             <form action="/cards" method="post" class="list-group">

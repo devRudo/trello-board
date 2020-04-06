@@ -39,7 +39,7 @@ app.get('/', (request, response) => {
 });
 
 app.get('/board/:id', (request, response) => {
-  fetch(`https://api.trello.com/1/boards/${request.params.id}?lists=open&cards=open&&key=${trello_api_key}&token=${trello_token}`)
+  fetch(`https://api.trello.com/1/boards/${request.params.id}?lists=open&cards=open&checklists=all&key=${trello_api_key}&token=${trello_token}`)
     .then(response => response.json())
     .then(board => response.render('pages/board', { board, boards: [] }))
     .catch(err => console.log(err));

@@ -80,16 +80,48 @@ button:focus {
   transform: none;
 }
 
-.deleteCard {
+.editCard {
   cursor: pointer;
   top: 0;
   right: 0;
 }
 
-.deleteList {
+.cardOptions{
+  top: 10px;
+  right: -120px;
+  z-index: 2;
+}
+
+.cardOptions .list-group-item {
+  background: rgba(0,0,0,0.6);
+  color: white;
+}
+
+:focus{
+  outline: none;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: none;
+}
+
+.deleteCard {
+  cursor: pointer;
+}
+
+.listOption {
   cursor: pointer;
   top: 15px;
-  right: 0;
+  right: 10px;
+}
+
+.deleteList {
+  cursor: pointer;
+  top: 45px;
+  right: -115px;
+  padding: 10px 20px;
+  z-index: 3;
 }
 
 .deleteBoard{
@@ -104,4 +136,17 @@ button:focus {
   top: 40px;
   right: 30px;
   padding: 10px 20px;
+}
+
+.modaloptions {
+  background: rgba(238,238,238);
+  cursor: pointer;
+}
+
+.modaloptions:hover {
+  background: rgba(0,0,0,0.2);
+}
+
+input[type=checkbox]:checked + span{
+  text-decoration: line-through;
 }
