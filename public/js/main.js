@@ -1,5 +1,10 @@
 
 $(document).ready(() => {
+    let readOnlyBoards = ['5e65bd8ff425e525aca64631', '5e845a3b779e06357216fd3d', '5e60b76c5b928d283db14923', '5e8876da77268e2656264886'];
+    readOnlyBoards.forEach((boardId) => {
+        $('.' + boardId).addClass('notAllowed');
+    });
+
     $('#addboard').click((event) => {
         $('#addboard').hide();
         $('#addboardform').toggleClass('d-none');
