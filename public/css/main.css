@@ -155,7 +155,7 @@ button:focus {
   background: rgba(0,0,0,0.2);
 }
 
-input[type=checkbox]:checked + span{
+input[type=checkbox]:checked + div > span{
   text-decoration: line-through;
 }
 
@@ -163,4 +163,13 @@ input[type=checkbox]:checked + span{
   top: 150px;
   left: 15px;
   right: -100px;
+}
+
+.deleteCheckItem{
+  top: 30px;
+  right: 35px;
+}
+
+.checklistName{
+  cursor: pointer;
 }

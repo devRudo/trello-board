@@ -325,6 +325,65 @@ app.post('/addCheckListItem', (request, response) => {
   }
 });
 
+app.post('/deleteCheckItem', (request, response) => {
+  let notAllowedToDelete = ['5e65bd8ff425e525aca64631', '5e845a3b779e06357216fd3d', '5e60b76c5b928d283db14923', '5e8876da77268e2656264886'];
+  let urlsplit = request.get('Referer').split('/');
+  let boardId = urlsplit[urlsplit.length - 1];
+  if (!notAllowedToDelete.includes(boardId)) {
+    fetch(`https://api.trello.com/1/checklists/${request.body.idChecklist}/checkItems/${request.body.idCheckItem}?key=${trello_api_key}&token=${trello_token}`, {
+      method: 'DELETE'
+    })
+      .then(response => {
+        console.log(`Response : ${response.status} ${response.statusText}`);
+        return response.text();
+      })
+      .then(text => response.redirect(request.get('Referer')))
+      .catch(err => console.log(err));
+  }
+  else {
+    response.redirect(request.get('Referer'));
+  }
+});
+
+app.post('/updateCheckItemStatus', (request, response) => {
+  let notAllowedToDelete = ['5e65bd8ff425e525aca64631', '5e845a3b779e06357216fd3d', '5e60b76c5b928d283db14923', '5e8876da77268e2656264886'];
+  let urlsplit = request.get('Referer').split('/');
+  let boardId = urlsplit[urlsplit.length - 1];
+  if (!notAllowedToDelete.includes(boardId)) {
+    fetch(`https://api.trello.com/1/cards/${request.body.idCard}/checkItem/${request.body.idCheckItem}?state=${request.body.checkItemState}&key=${trello_api_key}&token=${trello_token}`, {
+      method: 'PUT'
+    })
+      .then(response => {
+        console.log(`Response : ${response.status} ${response.statusText}`);
+        return response.text();
+      })
+      .then(text => response.redirect(request.get('Referer')))
+      .catch(err => console.log(err));
+  }
+  else {
+    response.redirect(request.get('Referer'));
+  }
+});
+
+app.post('/updateCheckItemName', (request, response) => {
+  let notAllowedToDelete = ['5e65bd8ff425e525aca64631', '5e845a3b779e06357216fd3d', '5e60b76c5b928d283db14923', '5e8876da77268e2656264886'];
+  let urlsplit = request.get('Referer').split('/');
+  let boardId = urlsplit[urlsplit.length - 1];
+  if (!notAllowedToDelete.includes(boardId)) {
+    fetch(`https://api.trello.com/1/cards/${request.body.idCard}/checkItem/${request.body.idCheckItem}?name=${request.body.checkItemName}&key=${trello_api_key}&token=${trello_token}`, {
+      method: 'PUT'
+    })
+      .then(response => {
+        console.log(`Response : ${response.status} ${response.statusText}`);
+        return response.text();
+      })
+      .then(text => response.redirect(request.get('Referer')))
+      .catch(err => console.log(err));
+  }
+  else {
+    response.redirect(request.get('Referer'));
+  }
+});
 
 // listening to server on defined port
 app.listen(port, () => {

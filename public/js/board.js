@@ -202,4 +202,81 @@ $(document).ready(() => {
             $(btn).parent().prev().toggleClass('d-none');
         });
     });
+
+    $('.deleteCheckItem').each((i, btn) => {
+        $(btn).click(() => {
+            let obj = {};
+            obj.idChecklist = $(btn).attr('data').split(" ")[0];
+            obj.idCheckItem = $(btn).attr('data').split(" ")[1];
+            fetch('/deleteCheckItem', {
+                method: 'post',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(obj)
+            })
+                .then(() => $(btn).parent().remove())
+                .catch((err) => {
+                    console.log(err);
+                });
+        });
+    });
+
+    $('.updateCheckItemStatus').each((i, btn) => {
+        $(btn).change(() => {
+            let obj = {};
+            obj.idCard = $(btn).attr('data').split(" ")[0];
+            obj.idCheckItem = $(btn).attr('data').split(" ")[1];
+            if ($(btn).is(':checked')) {
+                obj.checkItemState = 'complete';
+            }
+            else if (!$(btn).is(':checked')) {
+                obj.checkItemState = 'incomplete';
+            }
+            fetch('/updateCheckItemStatus', {
+                method: 'post',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(obj)
+            })
+                .then()
+                .catch((err) => {
+                    console.log(err);
+                });
+        });
+    });
+
+    $('.checklistName').each((i, name) => {
+        $(name).click(() => {
+            $(name).toggleClass('d-none');
+            $(name).next().toggleClass('d-none');
+        });
+    });
+
+    $('.updateCheckItemNameForm').each((i, form) => {
+        $(form).submit((event) => {
+            event.preventDefault();
+            let obj = {};
+            obj.checkItemName = $(form).children().children().val();
+            obj.idCard = $(form).children().children().next().val().split(" ")[0];
+            obj.idCheckItem = $(form).children().children().next().val().split(" ")[1];
+            fetch('/updateCheckItemName', {
+                method: 'post',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(obj)
+            })
+                .then(() => {
+                    $(form).toggleClass('d-none');
+                    $(form).prev().text(obj.checkItemName);
+                    $(form).prev().toggleClass('d-none');
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        });
+    });
+
 });

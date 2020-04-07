@@ -98,12 +98,22 @@
                                                                                             <% checklist.checkItems.forEach((checkItem)=>{ %>
                                                                                                 <li class="d-flex justify-content-between align-items-center">
                                                                                                     <div class="d-flex justify-content-start align-content-center">
-                                                                                                        <input type="checkbox" class="form-control-sm mr-4" <% if(checkItem.state === 'complete'){ %><%= 'checked' %> <% } %>> <span class="checklistName"><%= checkItem.name %></span>
+                                                                                                        <input type="checkbox" class="form-control-sm mr-4 updateCheckItemStatus" <% if(checkItem.state === 'complete'){ %><%= 'checked' %> <% } %> data="<%= card.id %> <%= checkItem.id %>">
+                                                                                                        <div class="d-flex flex-column">
+                                                                                                            <span class="checklistName"><%= checkItem.name %></span>
+                                                                                                            <form action="/updateCheckItemName" method="post" class="position-relative updateCheckItemNameForm d-none">
+                                                                                                                <div class="d-flex justify-content-between">
+                                                                                                                    <input type="text" name="checkItemName" class="form-control" value="<%= checkItem.name %>">
+                                                                                                                    <input type="hidden" name="data" value="<%= card.id %> <%= checkItem.id %>">
+                                                                                                                </div>
+                                                                                                                <button type="submit" class="form-control-sm btn btn-success mt-2">Save</button>
+                                                                                                            </form>
+                                                                                                        </div>
                                                                                                     </div>
-                                                                                                    <button class="btn fas fa-ellipsis-h"><i ></i></button>
+                                                                                                    <button class="btn fas fa-trash-alt text-muted deleteCheckItem" data="<%= checkItem.idChecklist %> <%= checkItem.id %>"><i ></i></button>
                                                                                                 </li>
                                                                                             <% }); %>
-                                                                                            <form action="/addCheckListItem" method="post" class="position-relative p-4 d-none" role="dialog">
+                                                                                            <form action="/addCheckListItem" method="post" class="position-relative p-4 d-none">
                                                                                                 <div class="d-flex justify-content-between">
                                                                                                     <input type="text" name="checkItemName" class="form-control" placeholder="Add an item">
                                                                                                     <input type="hidden" name="checkListId" value="<%= checklist.id %>">
