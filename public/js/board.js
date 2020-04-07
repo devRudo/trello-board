@@ -185,6 +185,21 @@ $(document).ready(() => {
         });
     });
 
+    $('.updateCheckListbtn').each((i, btn) => {
+        $(btn).click(() => {
+            $(btn).parent().parent().next().toggleClass('d-none');
+        });
+    });
 
+    $('.addChecklistBtn').each((i, btn) => {
+        $(btn).click(() => {
+            $(btn).next().toggleClass('d-none');
+        });
+    });
 
+    $('.addChecklistItembtn').each((i, btn) => {
+        $(btn).click(() => {
+            $(btn).parent().prev().toggleClass('d-none');
+        });
+    });
 });

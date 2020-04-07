@@ -158,3 +158,9 @@ button:focus {
 input[type=checkbox]:checked + span{
   text-decoration: line-through;
 }
+
+.addChecklistForm{
+  top: 150px;
+  left: 15px;
+  right: -100px;
+}

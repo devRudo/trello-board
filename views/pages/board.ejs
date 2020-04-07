@@ -39,8 +39,12 @@
                                                             <p onfocus="document.execCommand('selectAll',false,null)"><%= card.name %></p>
                                                             <a class="btn btn-sm position-absolute d-none editCard"><i class="fas fa-pencil-alt text-dark"></i></a>
                                                         </div>
-                                                        <% if(card.desc !== "") { %>
+                                                        <% if(card.badges.description) { %>
                                                             <i class="fas fa-align-left text-muted"></i>
+                                                        <% } %>
+                                                        <% if(card.idChecklists.length) { %>
+                                                            <i class="far fa-check-square text-muted ml-3"></i>
+                                                            <span><%= card.badges.checkItemsChecked %></span>/<span><%= card.badges.checkItems %></span>
                                                         <% } %>
                                                     </li>
                                                     <div class="position-absolute cardOptions d-none hiddenOnClick">
@@ -79,11 +83,11 @@
                                                                                 <% if(checklist.idCard === card.id){ %>
                                                                                     <div class="checklist mb-2">
                                                                                         <div class="d-flex justify-content-between align-items-center">
-                                                                                            <h6 class="mb-2 d-flex justify-content-start"><i class="far fa-check-square mr-2"></i> <span type="button" data-toggle="modal" data-target="#checkListFormModal"><%= checklist.name %> </span>
+                                                                                            <h6 class="mb-2 d-flex justify-content-start"><i class="far fa-check-square mr-2"></i> <span type="button" class="updateCheckListbtn"><%= checklist.name %> </span>
                                                                                             </h6>
                                                                                             <button class="bg-dark p-1 pl-2 pr-2 btn text-white rounded-lg mr-4 deleteChecklist" checkListId="<%= checklist.id %>">Delete</button>
                                                                                         </div>
-                                                                                        <form action="/updateChecklistName" method="post" class="modal position-relative p-4" id="checkListFormModal" role="dialog">
+                                                                                        <form action="/updateChecklistName" method="post" class="position-relative p-4 d-none" role="dialog">
                                                                                             <div class="d-flex justify-content-between">
                                                                                                 <input type="text" name="checkListName" class="form-control" value="<%= checklist.name %>">
                                                                                                 <input type="hidden" name="checkListId" value="<%= checklist.id %>">
@@ -92,8 +96,21 @@
                                                                                         </form>
                                                                                         <ul class="pt-2 pb-2">
                                                                                             <% checklist.checkItems.forEach((checkItem)=>{ %>
-                                                                                                <li class="d-flex align-items-center"><input type="checkbox" class="form-control-sm mr-4" <% if(checkItem.state === 'complete'){ %><%= 'checked' %> <% } %>> <span class="checklistName"><%= checkItem.name %></span></li>
+                                                                                                <li class="d-flex justify-content-between align-items-center">
+                                                                                                    <div class="d-flex justify-content-start align-content-center">
+                                                                                                        <input type="checkbox" class="form-control-sm mr-4" <% if(checkItem.state === 'complete'){ %><%= 'checked' %> <% } %>> <span class="checklistName"><%= checkItem.name %></span>
+                                                                                                    </div>
+                                                                                                    <button class="btn fas fa-ellipsis-h"><i ></i></button>
+                                                                                                </li>
                                                                                             <% }); %>
+                                                                                            <form action="/addCheckListItem" method="post" class="position-relative p-4 d-none" role="dialog">
+                                                                                                <div class="d-flex justify-content-between">
+                                                                                                    <input type="text" name="checkItemName" class="form-control" placeholder="Add an item">
+                                                                                                    <input type="hidden" name="checkListId" value="<%= checklist.id %>">
+                                                                                                </div>
+                                                                                                <button type="submit" class="form-control-sm btn btn-success mt-2">Add</button>
+                                                                                            </form>
+                                                                                            <li class="d-flex align-items-center p-4"><button class="bg-dark p-1 pl-2 pr-2 btn text-white rounded-lg addChecklistItembtn">Add an item</button></li>
                                                                                         </ul>
                                                                                     </div>
                                                                                 <% } %>
@@ -108,7 +125,22 @@
                                                                                 <small class="font-weight-bold text-muted text-uppercase">Add to card</small>
                                                                                 <li class="p-1 pl-2 mt-2 modaloptions rounded-lg"><i class="far fa-user"></i> Members</li>
                                                                                 <li class="p-1 pl-2 mt-2 modaloptions rounded-lg"><i class="fas fa-tag"></i> Labels</li>
-                                                                                <li class="p-1 pl-2 mt-2 modaloptions rounded-lg"><i class="fas fa-tasks"></i> Checklist</li>
+                                                                                <li class="p-1 pl-2 mt-2 modaloptions rounded-lg addChecklistBtn"><i class="fas fa-tasks"></i> Checklist</li>
+                                                                                <form action="/addChecklist" method="post" class="position-absolute addChecklistForm d-none">
+                                                                                    <div class="modal-content">
+                                                                                        <div class="modal-header">
+                                                                                            <h6 class="text-center">Add Checklist</h6>
+                                                                                        </div>
+                                                                                        <div class="modal-body">
+                                                                                            <div class="form-group">
+                                                                                                <label for="title">Title</label>
+                                                                                                <input type="text" name="checklistName" class="form-control form-control-sm title" value="Checklist">
+                                                                                                <input type="hidden" name="cardId" value="<%= card.id %>">
+                                                                                            </div>
+                                                                                            <button type="submit" class="btn btn-success">Add</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </form>
                                                                                 <li class="p-1 pl-2 mt-2 modaloptions rounded-lg"><i class="far fa-clock"></i> Due Date</li>
                                                                                 <li class="p-1 pl-2 mt-2 modaloptions rounded-lg"><i class="fas fa-paperclip"></i> Attachment</li>
                                                                             </ul>
